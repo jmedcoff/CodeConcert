@@ -365,7 +365,7 @@ Example: <a href="https://wikipedia.org/wiki/The_Lick_(music)">the  <i>L I C C</
 
 <div class="org-src-container">
 
-<pre class="src src-haskell">d1 $ slow 2 $ s "[arpy:1 arpy:2 arpy:3 arpy:4 arpy:2 ~ arpy arpy:1] ~"
+<pre class="src src-haskell">d1 $ slow 4 $ up "[2 4 5 7 4 ~ 0 2] ~" # s "arpy"
 </pre>
 </div>
 
@@ -373,7 +373,7 @@ Example: <a href="https://wikipedia.org/wiki/The_Lick_(music)">the  <i>L I C C</
 Let's dissect this.
 </p>
 <ul class="org-ul">
-<li>Items such as ~"arpy:2"~ are <i>sample references</i>. The colon and
+<li>Items such as ~"arpy"~ are <i>sample references</i>. A colon and
 number allow one to index samples in one directory
 (i.e. &#x2026;/arpy/1.wav, 2.wav, etc.)
 </li>
@@ -389,7 +389,7 @@ create note subdivisions left up to the imagination (eighths,
 sixteenths, triplets, quintuplets, and all manner of subdivisions of
 subdivisions).
 </li>
-<li>~"slow 2"~ just plays back the pattern half as fast (2 cycles to the
+<li>~"slow 4"~ just plays back the pattern half as fast (4 cycles to the
 pattern).
 </li>
 </ul>
