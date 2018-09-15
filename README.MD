@@ -1,7 +1,7 @@
 # Code Concert: Composing live music with TidalCycles
 
 The talk notes ([in html here](index.html)) can be found
-(here)[bit.ly/codeconcert].
+(here)[http://bit.ly/codeconcert].
 
 Some extra info not covered in the talk, mostly extra detail:
 
