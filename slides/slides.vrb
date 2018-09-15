@@ -1,0 +1,8 @@
+\frametitle{Examples}
+		What can programs do that human performers or sequencing software can't easily do?
+
+		\begin{lstlisting}[language=Haskell]
+		d1 $ s "rad1*8" # n $ run 8
+		\end{lstlisting}
+
+		Pay close attention to the \texttt{n} function. Then try \texttt{irand}.

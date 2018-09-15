@@ -1,0 +1,367 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2017/Debian) (preloaded base=mf 2017.12.23)  15 SEP 2018 17:51
+**\mode:=ljfour; mag:=1; nonstopmode; input ecss0400
+(/home/jason/.texlive2017/texmf-var/fonts/source/jknappen/ec/ecss0400.mf
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exbase.mf)
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/ecss.mf
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exroman.mf
+ Ok (/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exaccess.mf
+ Ok) (/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/expseudo.mf
+ Ok) (/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exruwest.mf
+ Ok [192] [193] [194] [195] [196] [197] [198] [199] [200] [201] [202] [203]
+[204] [205] [206] [207] [208] [209] [210] [211] [212] [213] [214] [215]
+[216] [217] [218] [219] [220] [221] [222] [223])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrlwest.mf
+ Ok [224] [225] [226] [227] [228] [229] [230] [231] [232] [233] [234] [235]
+[236] [237] [238] [239] [240] [241] [242] [243] [244] [245] [246] [247]
+[248] [249] [250] [251] [252]
+> 0 NNE 1 NNW WNW 2 (WSW) SSW 3 (SSE ESE) ENE NNE ENE ESE SSE SSW 4 5 WSW 0 (WN
+W NNW)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+<for(%CAPSULE10676)> ...oke.z3e---z5e...{left}z6e;
+                                                  pickup.fine.nib;pos6'(bot_...
+l.1012 repeat_once
+                  ;
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[253]
+> 0 WSW 1 (WNW) NNW WNW WSW SSW SSE ESE 2 3 SSE 4 SSW 5 WSW 6 WNW NNW 7 (NNE) E
+NE 8 (ESE) SSE ESE 9 ENE 10 NNE 11 NNW WNW 12 13 WSW SSW 0
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.1063  &super_arc.e(5,6)&z6e{left}...{up}z7e;
+                                                % bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[254] [255])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrueast.mf
+ Ok [128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138] [139]
+[140] [141] [142] [143] [144] [145] [146] [147] [148] [149] [150] [151]
+[152] [153] [154] [155] [156] [157])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrleast.mf
+ Ok
+> 0 ENE 1 NNE ENE ESE SSE SSW WSW 2 3 SSW 4 SSE 5 ESE 6 ENE NNE 7 (NNW WNW) WSW
+ 8 SSW WSW 9 WNW 10 NNW 11 NNE ENE 12 13 ESE SSE 0 (ESE)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.75  & pulled_arc.e(5,6)...{up}z7e;
+                                     % bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[158] [160] [161] [162]
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.257 ...serifs: 0.5[0.5[x3l,x3],x0r] else: x2 fi)
+                                                  ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[163]
+> 0 ENE 1 NNE ENE ESE SSE SSW WSW 2 3 SSW 4 SSE 5 ESE 6 ENE NNE 7 (NNW WNW) WSW
+ 8 SSW WSW 9 WNW 10 NNW 11 NNE ENE 12 13 ESE SSE 0 (ESE)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.280  & pulled_arc.e(5,6)...{up}z7e;
+                                      % bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[164]
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.323 lc_hachek_accent(x2)
+                          ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[165] [166] [167] [168] [169] [170] [171]
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.566 lc_hachek_accent(1/2[x1r,x.a1])
+                                     ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[172] [173] [174] [175]
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.679 lc_hachek_accent(0.5[x1,x4])
+                                  ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[176] [177]
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.764 lc_hachek_accent(0.5[x3l,x1l])
+                                    ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[178] [179] [180] [181] [182] [183]
+> 0 NNE 1 NNW WNW 2 (WSW) SSW 3 (SSE ESE) ENE NNE ENE ESE SSE SSW 4 5 WSW 0 (WN
+W NNW)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.989  fill stroke z3e---z5e...{left}z6e;
+                                           % arc
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[184]
+! Square root of -1.16454 has been replaced by 0.
+diag_ratio->...((EXPR2)*((EXPR5)++(EXPR4)*sqrt.a_)
+                                                  -b_*(EXPR5))/a_/(EXPR4)end...
+<for(1)> ...stem-tiny,y2-y3,x2r-x3l-slant*(y2-y3))
+                                                  ;penpos1(alpha*(z_stem-tin...
+l.1025 repeat_once
+                  ;
+Since I don't take square roots of negative numbers,
+I'm zeroing this one. Proceed, with fingers crossed.
+
+! Square root of -1.09401 has been replaced by 0.
+diag_ratio->...((EXPR2)*((EXPR5)++(EXPR4)*sqrt.a_)
+                                                  -b_*(EXPR5))/a_/(EXPR4)end...
+<for(%CAPSULE11074)> ...-y3,x2r-x3l-slant*(y2-y3))
+                                                  ;penpos1(alpha*(z_stem-tin...
+l.1025 repeat_once
+                  ;
+Since I don't take square roots of negative numbers,
+I'm zeroing this one. Proceed, with fingers crossed.
+
+[185]
+! Square root of -1.09401 has been replaced by 0.
+diag_ratio->...((EXPR2)*((EXPR5)++(EXPR4)*sqrt.a_)
+                                                  -b_*(EXPR5))/a_/(EXPR4)end...
+l.1039 ...z_stem-tiny,y2-y3,x2r-x3l-slant*(y2-y3))
+                                                  ;
+Since I don't take square roots of negative numbers,
+I'm zeroing this one. Proceed, with fingers crossed.
+
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.1053 lc_hachek_accent(1/2[x6r,x1r])
+                                     ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[186]
+! Square root of -1.16454 has been replaced by 0.
+diag_ratio->...((EXPR2)*((EXPR5)++(EXPR4)*sqrt.a_)
+                                                  -b_*(EXPR5))/a_/(EXPR4)end...
+<for(1)> ...stem-tiny,y2-y3,x2r-x3l-slant*(y2-y3))
+                                                  ;penpos1(alpha*(z_stem-tin...
+l.1083 repeat_once
+                  ;
+Since I don't take square roots of negative numbers,
+I'm zeroing this one. Proceed, with fingers crossed.
+
+! Square root of -1.09401 has been replaced by 0.
+diag_ratio->...((EXPR2)*((EXPR5)++(EXPR4)*sqrt.a_)
+                                                  -b_*(EXPR5))/a_/(EXPR4)end...
+<for(%CAPSULE9288)> ...2-y3,x2r-x3l-slant*(y2-y3))
+                                                  ;penpos1(alpha*(z_stem-tin...
+l.1083 repeat_once
+                  ;
+Since I don't take square roots of negative numbers,
+I'm zeroing this one. Proceed, with fingers crossed.
+
+[187] [188])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exbraces.mf
+ Ok [94] [126] [23] [40] [41] [60] [124] [62] [91] [93] [92] [123] [125]
+[95] [127] [32])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/expunct.mf
+ Ok [14] [15] [19] [20] [13] [18] [33] [39] [42] [43] [44] [46] [47] [58]
+[59] [61] [96] [189] [17] [45] [16] [21] [22])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exaccent.mf
+ Ok [0] [1] [2] [3] [4] [5] [6]
+>> x50
+! Undefined x coordinate has been replaced by 0.
+<to be read again> 
+                   {
+--->{
+     curl1}..{curl1}
+lc_hachek_accent->...ldraw.z54l--z51l--z51r--z50--
+                                                  z53l--z53r--z54r--cycle;fi...
+l.70 lc_hachek_accent(.5w)
+                          ;
+I need a `known' x value for this part of the path.
+The value I found (see above) was no good;
+so I'll try to keep going by using zero instead.
+(Chapter 27 of The METAFONTbook explains that
+you might want to type `I ???' now.)
+
+[7] [8] [9] [10] [11] [12])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exsign.mf
+ Ok
+> 0 NNE 1 (NNW WNW) WSW 2 SSW 3 SSE ESE 4 5 (ENE) NNE 6 (ENE) ESE SSE 7 8 SSW 9
+ WSW 0 (WNW NNW)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.38  & pulled_super_arc.e(2,3)(superpull);
+                                             % left half of lower bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+> 0 SSW 1 (SSE ESE) ENE 2 NNE 3 NNW WNW 4 5 (WSW) SSW 6 (WSW) WNW NNW 7 8 NNE 9
+ ENE 0 (ESE SSE)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.39 ...troke super_arc.e(3,4) & super_arc.e(4,1);
+                                                   % right half of lower bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[24] [34] [35] [36] [37] [64] [191] [159])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrlig.mf
+ Ok [25] [26] [28] [27] [29] [30] [31])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exromp.mf
+ Ok [38] [63] [190])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrulett.mf
+ Ok [65] [66] [67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78]
+[79] [80] [81] [82] [83] [84] [85] [86] [87] [88] [89] [90])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrllett.mf
+ Ok [97]
+> 0 WSW 1 (WNW) NNW WNW WSW SSW SSE ESE 2 3 SSE 4 SSW 5 WSW 6 WNW NNW 7 (NNE) E
+NE 8 (ESE) SSE ESE 9 ENE 10 NNE 11 NNW WNW 12 13 WSW SSW 0
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.83 ...ed_arc.e(4,5)&pulled_arc.e(5,6)...{up}z7e;
+                                                   % bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[98] [99]
+> 0 ENE 1 NNE ENE ESE SSE SSW WSW 2 3 SSW 4 SSE 5 ESE 6 ENE NNE 7 (NNW WNW) WSW
+ 8 SSW WSW 9 WNW 10 NNW 11 NNE ENE 12 13 ESE SSE 0 (ESE)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.140  & pulled_arc.e(5,6)...{up}z7e;
+                                      % bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[100] [101] [102] [103] [104] [105] [106] [107] [108] [109] [110] [111]
+> 0 WSW 1 (WNW) NNW WNW WSW SSW SSE ESE 2 3 SSE 4 SSW 5 WSW 6 WNW NNW 7 (NNE) E
+NE 8 (ESE) SSE ESE 9 ENE 10 NNE 11 NNW WNW 12 13 WSW SSW 0
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.476  &super_arc.e(5,6)&z6e{left}...{up}z7e;
+                                               % bowl
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[112] [113] [114] [115] [116] [117] [118] [119] [120]
+> 0 NNE 1 NNW WNW 2 (WSW) SSW 3 (SSE ESE) ENE NNE ENE ESE SSE SSW 4 5 WSW 0 (WN
+W NNW)
+! Strange path (turning number is zero).
+<to be read again> 
+                   ;
+l.799  fill stroke z3e---z5e...{left}z6e;
+                                           % arc
+The path doesn't have a counterclockwise orientation,
+so I'll probably have trouble drawing it.
+(See Chapter 27 of The METAFONTbook for more help.)
+
+[121]
+! Square root of -1.09401 has been replaced by 0.
+diag_ratio->...((EXPR2)*((EXPR5)++(EXPR4)*sqrt.a_)
+                                                  -b_*(EXPR5))/a_/(EXPR4)end...
+l.817 ...,z_stem-tiny,y2-y3,x2r-x3l-slant*(y2-y3))
+                                                  ;
+Since I don't take square roots of negative numbers,
+I'm zeroing this one. Proceed, with fingers crossed.
+
+[122]) (/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrdigit.mf
+ Ok [48] [49] [50] [51] [52] [53] [54] [55] [56] [57])
+(/usr/share/texlive/texmf-dist/fonts/source/jknappen/ec/exrligtb.mf
+ Ok) ) ) ) 
+Here is how much of METAFONT's memory you used:
+ 748 strings out of 5274
+ 8626 string characters out of 69974
+ 40701 words of memory out of 5000000
+ 1537 symbolic tokens out of 9500
+ 12i,79n,0r,23p,236b stack positions out of 300i,300n,1000r,150p,200000b
+ 
+(You used 69w,16h,13d,11i,370l,9k,0e,16p metric file positions
+  out of 256w,16h,16d,64i,15000l,2500k,256e,60p)
+
+Font metrics written on ecss0400.tfm.
+Output written on ecss0400.600gf (256 characters, 20732 bytes).

@@ -1,0 +1,236 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{textpos} % package for the positioning
+\usepackage{graphicx} % Allows including images
+\usepackage{tikz} % for those who hate themselves
+\usetikzlibrary{calc}
+\usepackage{mwe}
+\usetikzlibrary{positioning}
+\usepackage{listings}
+\usepackage{fontenc}
+
+\usetheme{Madrid}
+
+
+\title[Code Concert]{Code Concert: Writing live music with TidalCycles}
+\author{Jason Medcoff}
+\date{September 22 2018}
+
+\begin{document}
+	\begin{frame}
+		\frametitle{\space}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Introduction}
+		A little bit about me.
+		
+		I'm a programmer, a musician, and a mathematics enthusiast.
+		
+		I'm very excited today to give a talk involving all three.
+		
+		If this excites you too, you're in the right place.
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Introduction}
+		What is this talk about?
+		
+		\begin{itemize}
+			\item TidalCycles, a pattern based language
+			\item Haskell, the programming language it's built on
+			\item How to put them together to have a lot of fun
+		\end{itemize}
+	
+	Functional programming is really awesome, therefore Haskell is awesome, though neither are the main focus here. We'll talk about it enough to understand what's going on.
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Lists and You: the joy of FP}
+		Lists are the quintessential data type. You can't do much without them.
+		
+		\begin{itemize}
+			\item plain old arrays
+			\item linked lists
+			\item \texttt{java.util.ArrayList}
+			\item \texttt{'()} or \texttt{nil}
+			\item etc.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Lists and You}
+		FP is the best way to work with lists, because no matter the language, abstract lists are recursively defined.
+		
+		\begin{center}
+			\texttt{<List> = <[]> | <Object><List>}
+		\end{center}
+	
+		By the way, this is basically all of lisp.
+		\begin{center}
+			\texttt{(function first-arg second-arg etc...)}
+		\end{center}	
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Lists and You}
+		We can build lists by hand.
+		
+			\begin{itemize}
+				\item \texttt{1 : []} gives \texttt{[1]}
+				\item \texttt{1 : [2, 3]} gives \texttt{[1, 2, 3]}
+				\item \texttt{[1, 2] : [[3]]} gives \texttt{[[1, 2], [3]]}
+				\item \texttt{'h' : 'e' : 'l' : 'l' : 'o' : []} gives \texttt{"hello"}
+			\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Lists and You}
+		Some takeaways:
+		\begin{itemize}
+			\item Haskell is strongly typed, and thus wants homogeneous lists
+			\item Haskell treats strings as lists of characters
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Enter TidalCycles: the Pattern}
+		Let's start with a notion of tempo.
+		
+		Tidal measures cycles per second (cps), but we can use some \textit{DIMENSIONAL ANALYSIS}$^{TM}$ to put this in more familiar terms.
+		
+		\begin{lstlisting}[language=Haskell]
+		cps = (120/60/4)
+		\end{lstlisting}
+		
+		where 120 is beats per minute (bpm), 60 is seconds per minute, and 4 is beats per cycle. We are not restricted to this division.
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{The Pattern}
+		What is a ``list" in music?
+		\begin{itemize}
+			\item a lick
+			\item a riff
+			\item a melody
+			\item a beat
+			\item a bassline
+			\item etc.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{An example: the L I C C}
+		
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{An example: the L I C C}
+		\begin{lstlisting}[language=Haskell,showstringspaces=false]
+		d1 $ slow 4 $ up 
+		"[2 4 5 7 4 ~ 0 2] ~" # s "arpy"
+		\end{lstlisting}
+		\begin{itemize}
+			\item sample references
+			\item rests
+			\item sequences
+			\item functions, of course
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Extreme hand waving}
+		To summarize:
+		\begin{center}
+			\texttt{<Sample-ref> = <Sample-name>":"<Sample-index>}
+			
+			\texttt{<Note> = <\textasciitilde> | <Sample-ref>}
+			
+			\texttt{<Notes> = < > | <Note><Notes>}
+			
+			\texttt{<Pattern> = <Notes> | <Notes><Pattern><Notes>}
+			
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{The TidalCycles Architecture}
+		Audio applications that aren't workstations tend to have a simple and familiar paradigm.
+		\begin{itemize}
+			\item A client, interfaced by an editor
+			\item A server, listening for messages
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{The TidalCycles Architecture}
+		Here's how Tidal does it.
+		
+		The client is a Haskell interactive session running TidalCycles.
+		
+		The server is a sampler running on SuperCollider.
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Baby Steps}
+		Let's make some noise.
+		
+		\begin{lstlisting}[language=Haskell]
+		d1 (pattern-effect (... 
+		(sound "some-pattern" 
+		# synth-effects)))
+		\end{lstlisting}
+		
+		Make it concise:
+		\begin{lstlisting}[language=Haskell]
+		d1 $ pattern-effect $ 
+		sound "some-pattern" # synth-effects
+		\end{lstlisting}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Examples}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Examples}
+		What can programs do that human performers or sequencing software can't easily do?
+		
+		\begin{lstlisting}[language=Haskell]
+		d1 $ s "rad1*8" # n $ run 8
+		\end{lstlisting}
+		
+		Pay close attention to the \texttt{n} function. Then try \texttt{irand}.
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Samples}
+		Where do the samples come from?
+		
+		I like to prepare my own, and combine them in interesting ways.
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Where to go from here}
+		Interested? Check this out.
+		\begin{itemize}
+			\item tidalcycles.org 
+			\item TOPLAP (toplap.org)
+			\item bit.ly/codeconcert
+		\end{itemize}
+		
+	\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
