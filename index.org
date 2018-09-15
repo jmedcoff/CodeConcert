@@ -1,0 +1,275 @@
+#+TITLE: Code Concert: Writing live music with TidalCycles
+#+AUTHOR: Jason Medcoff
+#+DATE: 22 September 2018
+#+SETUPFILE: theme-readtheorg.setup
+
+
+
+* Introduction: The shirts I wear
+
++ OU SECS - I was a student at OU
++ GrizzHacks 2 - I am a hacker
++ Ally Recruiting - now I'm an Ally
+
+* The music I make
+
+I've always been involved in music. Piano, guitar, drums, and recently
+bass. Currently, composition and electronics. Three things I can
+confidently geek out about indefinitely: programming, math, and music.
+A show of hands:
++ Who considers themselves a programmer?
++ A musician?
++ Not a musician, but has interest in getting into music?
++ Has any interest in composing?
++ Has an unhealthy interest in random number generation?
+
+* What is this talk about?
+
++ TidalCycles, a pattern based music programming language, which lives
+  on top of...
++ Haskell, which is...
+  - strongly statically typed (type classes, with very smart
+    inference)
+  - purely functional (no side effects. Corollary: a function invoked
+    with the same arguments will *always* return the same
+    result. Another corollary: Haskell has no notion of state.)
+  - lazily evaluated (expressions are evaluated as late as they can
+    be)
+  - compiled, yet still very interactive (hopefully you know what
+    "compiled" means by now)
+  - general purpose (alongside pattern matching makes Haskell quite
+    powerful)
++ How to "compose" using the features of both
+
+I firmly believe that FP (functional programming) is the holy grail of
+computer programming: you tell the computer /what/ to do, and it does
+it, no questions asked. Haskell in this regard could have its own
+entire talk, but we will only focus on the elements pertinent to using
+Tidal.
+
+* Lists and you: the joy of functional programming
+
+(Note: henceforth "list" and "sequence" are synonymous.)  Lists (in an
+ADT sense) are the quintessential data type. Think back to the good
+old days in data structures/algorithms class:
++ plain old arrays (for the lazy, or those desiring efficiency)
++ linked lists (bringing memories of being forced to implement them by
+  hand)
++ ArrayList (if you love torturing yourself with Java) (ArrayList is
+  implemented as a dynamic array in OpenJDK)
++ ='()= or ~NIL~ (if you fancy yourself intellectually superior)
++ Etc.
+
+Functional programming: the absolute best way to work with lists. Why?
+In pure and implementation agnostic terms, lists are defined
+recursively:
+
+#+BEGIN_EXAMPLE
+<List> = <[]> | <Object><List>
+#+END_EXAMPLE
+
+In English, the first item of the list plus the rest of the list. Or,
+an empty list. (Incidentally, this is the entire syntax of Lisp. Most
+lists in the language are like
+
+#+BEGIN_SRC lisp
+(function first-arg second-arg etc...)
+#+END_SRC
+
+with the obvious connotations. S-expressions, for those interested.)
+
+This lets you build lists from the ground up like so (what's the
+opposite of recursion?)
+
++ ~1 : []~ gives you ~[1]~
++ ~1 : [2, 3]~ gives you ~[1, 2, 3]~
++ ~[1, 2] : [[3]]~ gives you ~[[1, 2], [3]]~
++ ~'h' : 'e' : 'l' : 'l' : 'o' : []~ gives you ~"hello"~
+
+(Lispers - the colon represents the "cons" operator.)  These examples
+are given in Haskell, and there are two takeaways to note:
+1. Haskell is strongly typed, and wants homogeneous lists
+2. Haskell treats strings (double quotes) as lists of characters
+   (single quotes).
+
+* Enter TidalCycles: the /Pattern/
+
+Real quick, let's talk tempo. Tidal measures cycles per second (cps),
+but this can easily be converted into a more preferable language. For
+example, if I want 120 beats per minute where every cycle is one
+measure (four beats), I set
+
+#+BEGIN_SRC haskell
+cps = (120/60/4)
+#+END_SRC
+
+where 120 is the tempo in bpm, 60 is the number of seconds in one
+minute, and 4 is the number of beats per cycle. Note that we can and
+will further subdivide this later.
+
+The "list" in music: lick, riff, melody, beat, bassline, etc.  How can
+we represent any of these as a list in Haskell? Note that we must
+capture pitch and rhythm, at a minimum.  Easily, as a sequence of
+"notes" and rests. What is a note? We'll get to that.
+
+Example: [[https://wikipedia.org/wiki/The_Lick_(music)][the  /L I C C/]]
+
+#+BEGIN_SRC haskell
+d1 $ slow 2 $ s "[arpy:1 arpy:2 arpy:3 arpy:4 arpy:2 ~ arpy arpy:1] ~"
+#+END_SRC
+
+Let's dissect this.
++ Items such as ~"arpy:2"~ are /sample references/. The colon and
+  number allow one to index samples in one directory
+  (i.e. .../arpy/1.wav, 2.wav, etc.)
++ The tilde represents a /rest/. Rests take on the same duration as
+  the other elements in its sequence have.
++ The square brackets represent an entire /sequence/. This is very
+  powerful. Above, it means the inner sequence and the rest to the
+  right have the same value (there is an implicit set of brackets
+  around the entire string). This is how we can create, in this case,
+  a half rest or whole rest, or in other more interesting cases,
+  create note subdivisions left up to the imagination (eighths,
+  sixteenths, triplets, quintuplets, and all manner of subdivisions of
+  subdivisions).
++ ~"slow 2"~ just plays back the pattern half as fast (2 cycles to the
+  pattern).
+
+So our note sequences, or /patterns/ as they are known to Tidal, have
+a *very rich* recursive structure, that not only defines the contents
+(notes and instruments) but the very rhythms themselves!
+
+To summarize in a very hand-wavy way:
+
+#+BEGIN_EXAMPLE
+<Sample-ref> = <Sample-name>":"<Sample-index>
+<Note> = <~> | <Sample-ref>
+<Notes*> = < > | <Note> | <Note><Note> | <Note><Note><Note> | ...
+<Pattern> = <Notes*> | <Notes*><Pattern><Notes*>
+#+END_EXAMPLE
+
+Do understand this is no coincidence. Haskell has very powerful
+pattern matching capability built into the language for extending the
+language with one's own datatypes.
+
+* The TidalCycles architecture
+
+Recording/producing/composing applications in Linux, as well as with
+music programming, tend to follow a simple and familiar paradigm.
+
++ A client, typically interfaced by a text editor or command line
+  interface, hooked up via a port to...
++ The server, who listens on said port for messages to be evaluated.
+
+What's nice: ports are general. Use these applications on one machine,
+with different users, over a network, etc.
+
+TidalCycles does this in the following interesting way.
++ The client is essentially a Haskell interactive "REPL" (GHCi, for
+  the most part) running TidalCycles, the domain specific language.
++ The server is a sampler called SuperDirt, written in and running on
+  a (much broader in scope and significantly more complex) music
+  programming environment called SuperCollider. SC talks to your
+  computer's soundcard.
+
+You can interface with TidalCycles with your favorite text editor
+(Emacs, VSCode, Atom, Vim, Sublime). With these editors, starting GHCi
+and hooking up to SuperDirt is taken care of behind the scenes. The
+only aspect of the editor's Tidal add-on you really need to know is
+one keyboard shortcut: execute line/block.
+
+* Baby Steps
+
+Now let's make some sound.  Since Haskell is functional, and there are
+no objects, sound is generated by passing parameters to functions to
+functions. The general syntax is:
+
+#+BEGIN_SRC haskell
+d1 (pattern-effect (... (sound "some-pattern" # synth-effects) ) ... )
+#+END_SRC
+
+Every function's arguments are listed on the right. Parentheses are
+used to specify order of operations and clarify what is an argument
+and what is a function. Haskell has a shorthand for this. Everything
+to the right of a dollar sign is inside of imaginary parentheses:
+
+#+BEGIN_SRC haskell
+d1 $ pattern-effect $ ... $ sound "some-pattern" # synth-effects
+#+END_SRC
+
+The ~d*~ functions where ~*~ is a number 1 through 9 are outputs. The
+"sound" function (shorthand: ~"s"~) takes as its argument a pattern in
+string format and returns a "ParamPattern" which can be passed into
+"pattern effect" functions. These are things like changing playback
+speed, reversing, and permuting patterns. Synth effects are things
+like filters and sample playback position.
+
+** TODO Examples here.
+
+Of course, the true power of something like TidalCycles is the ability
+to use programming constructs one doesn't have access to when
+composing or performing traditionally. Remember how I have a thing for
+RNG? There's a really nice function in Tidal called ~irand~.
+
+I happen to have some drum breaks that I processed and sliced up using
+Ableton Live.
+
+#+BEGIN_SRC haskell
+d1 $ s "rad1*8" # n $ run 8
+#+END_SRC
+
+(The second option parameterizes the sample index and is better if you
+plan to add more synth effects; they just append to the end of the
+line.)  Bam, instant breakcore. Not bad, but we can do even
+better. How can we make this even more IDM-ish and glitchy? Lots of
+effects. Some of my favorites:
+
+** TODO More examples here.
+
+Now I'm just going to start doing stuff. While Tidal makes available
+many samples via the Dirt-Samples quark, I have my own library I've
+been building that I'll stick to. These will be included on GitHub,
+along with the source code for whatever I'm about to do.
+
+** TODO Live demo goes here.
+
+* Outro: where to go from here
+
+At this point, you're either totally hooked and can't wait to get
+started yourself, or you're thoroughly disinterested and ready to get
+back to your projects.  In the latter case, I hope you still gained
+something, even if it was just knowledge of something new.
+
+In the former case, to learn more, check out
+[[https://tidalcycles.org]]. The first tutorial will have you set up the
+environment and start learning the basics of creating patterns. The
+full documentation is, as appropriate for a functional language, a
+list of functions and what they do, with some good examples. But to
+really get the best learning experience, watch Tidal performances and
+try doing the things you see.
+
+[[https://toplap.org][TOPLAP]] is a very abstract and decentralized organization that promotes
+live coding as a performance art. One of their guiding principles
+argues that the audience should be included in the process, via the
+mantra "show us your screens". This is really cool, since it means the
+audience gets to see the "sheet music" as it's being written - they
+might not understand every detail of the language, but they still
+understand at a high level what the code does, because everyone can
+/hear/ what it does. So, watch some YouTube videos of performance
+events, or /algoraves/ as they are sometimes called, and read the
+code. Try stuff on your own machine, and experiment with the ideas you
+see in the performances.
+
+** Question time
+
+Once again, thanks to Shriyash for the invitation to talk, the
+GrizzHacks team for having me, and you for your attention. Happy
+hacking!
+
+Jason Medcoff
+
+[[https://github.com/jorts1114]]
+[[
+https://soundcloud.com/jortswubs]]
+[[
+https://jortswubs.bandcamp.com]]n

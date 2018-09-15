@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Code Concert: Writing live music with TidalCycles</title>
+<!-- 2018-08-25 Sat 17:22 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jason Medcoff" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Code Concert: Writing live music with TidalCycles</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction: The shirts I wear</a></li>
+<li><a href="#sec-2">2. The music I make</a></li>
+<li><a href="#sec-3">3. What is this talk about?</a></li>
+<li><a href="#sec-4">4. Lists and you: the joy of functional programming</a></li>
+<li><a href="#sec-5">5. Enter TidalCycles: the <i>Pattern</i></a></li>
+<li><a href="#sec-6">6. The TidalCycles architecture</a></li>
+<li><a href="#sec-7">7. Baby Steps</a>
+<ul>
+<li><a href="#sec-7-1">7.1. <span class="todo TODO">TODO</span> Examples here.</a></li>
+<li><a href="#sec-7-2">7.2. <span class="todo TODO">TODO</span> More examples here.</a></li>
+<li><a href="#sec-7-3">7.3. <span class="todo TODO">TODO</span> Live demo goes here.</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Outro: where to go from here</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Question time</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction: The shirts I wear</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>OU SECS - I was a student at OU
+</li>
+<li>GrizzHacks 2 - I am a hacker
+</li>
+<li>Ally Recruiting - now I'm an Ally
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> The music I make</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+I've always been involved in music. Piano, guitar, drums, and recently
+bass. Currently, composition and electronics. Three things I can
+confidently geek out about indefinitely: programming, math, and music.
+A show of hands:
+</p>
+<ul class="org-ul">
+<li>Who considers themselves a programmer?
+</li>
+<li>A musician?
+</li>
+<li>Not a musician, but has interest in getting into music?
+</li>
+<li>Has any interest in composing?
+</li>
+<li>Has an unhealthy interest in random number generation?
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> What is this talk about?</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>TidalCycles, a pattern based music programming language, which lives
+on top of&#x2026;
+</li>
+<li>Haskell, which is&#x2026;
+<ul class="org-ul">
+<li>strongly statically typed (type classes, with very smart
+inference)
+</li>
+<li>purely functional (no side effects. Corollary: a function invoked
+with the same arguments will <b>always</b> return the same
+result. Another corollary: Haskell has no notion of state.)
+</li>
+<li>lazily evaluated (expressions are evaluated as late as they can
+be)
+</li>
+<li>compiled, yet still very interactive (hopefully you know what
+"compiled" means by now)
+</li>
+<li>general purpose (alongside pattern matching makes Haskell quite
+powerful)
+</li>
+</ul>
+</li>
+<li>How to "compose" using the features of both
+</li>
+</ul>
+
+<p>
+I firmly believe that FP (functional programming) is the holy grail of
+computer programming: you tell the computer <i>what</i> to do, and it does
+it, no questions asked. Haskell in this regard could have its own
+entire talk, but we will only focus on the elements pertinent to using
+Tidal.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Lists and you: the joy of functional programming</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+(Note: henceforth "list" and "sequence" are synonymous.)  Lists (in an
+ADT sense) are the quintessential data type. Think back to the good
+old days in data structures/algorithms class:
+</p>
+<ul class="org-ul">
+<li>plain old arrays (for the lazy, or those desiring efficiency)
+</li>
+<li>linked lists (bringing memories of being forced to implement them by
+hand)
+</li>
+<li>ArrayList (if you love torturing yourself with Java) (ArrayList is
+implemented as a dynamic array in OpenJDK)
+</li>
+<li><code>'()</code> or <code>NIL</code> (if you fancy yourself intellectually superior)
+</li>
+<li>Etc.
+</li>
+</ul>
+
+<p>
+Functional programming: the absolute best way to work with lists. Why?
+In pure and implementation agnostic terms, lists are defined
+recursively:
+</p>
+
+<pre class="example">
+&lt;List&gt; = &lt;[]&gt; | &lt;Object&gt;&lt;List&gt;
+</pre>
+
+<p>
+In English, the first item of the list plus the rest of the list. Or,
+an empty list. (Incidentally, this is the entire syntax of Lisp. Most
+lists in the language are like
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-lisp">(function first-arg second-arg etc...)
+</pre>
+</div>
+
+<p>
+with the obvious connotations. S-expressions, for those interested.)
+</p>
+
+<p>
+This lets you build lists from the ground up like so (what's the
+opposite of recursion?)
+</p>
+
+<ul class="org-ul">
+<li><code>1 : []</code> gives you <code>[1]</code>
+</li>
+<li><code>1 : [2, 3]</code> gives you <code>[1, 2, 3]</code>
+</li>
+<li><code>[1, 2] : [[3]]</code> gives you <code>[[1, 2], [3]]</code>
+</li>
+<li><code>'h' : 'e' : 'l' : 'l' : 'o' : []</code> gives you <code>"hello"</code>
+</li>
+</ul>
+
+<p>
+(Lispers - the colon represents the "cons" operator.)  These examples
+are given in Haskell, and there are two takeaways to note:
+</p>
+<ol class="org-ol">
+<li>Haskell is strongly typed, and wants homogeneous lists
+</li>
+<li>Haskell treats strings (double quotes) as lists of characters
+(single quotes).
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Enter TidalCycles: the <i>Pattern</i></h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Real quick, let's talk tempo. Tidal measures cycles per second (cps),
+but this can easily be converted into a more preferable language. For
+example, if I want 120 beats per minute where every cycle is one
+measure (four beats), I set
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">cps = (120/60/4)
+</pre>
+</div>
+
+<p>
+where 120 is the tempo in bpm, 60 is the number of seconds in one
+minute, and 4 is the number of beats per cycle. Note that we can and
+will further subdivide this later.
+</p>
+
+<p>
+The "list" in music: lick, riff, melody, beat, bassline, etc.  How can
+we represent any of these as a list in Haskell? Note that we must
+capture pitch and rhythm, at a minimum.  Easily, as a sequence of
+"notes" and rests. What is a note? We'll get to that.
+</p>
+
+<p>
+Example: <a href="https://wikipedia.org/wiki/The_Lick_(music)">the  <i>L I C C</i></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">d1 $ slow 2 $ s "[arpy:1 arpy:2 arpy:3 arpy:4 arpy:2 ~ arpy arpy:1] ~"
+</pre>
+</div>
+
+<p>
+Let's dissect this.
+</p>
+<ul class="org-ul">
+<li>Items such as ~"arpy:2"~ are <i>sample references</i>. The colon and
+number allow one to index samples in one directory
+(i.e. &#x2026;/arpy/1.wav, 2.wav, etc.)
+</li>
+<li>The tilde represents a <i>rest</i>. Rests take on the same duration as
+the other elements in its sequence have.
+</li>
+<li>The square brackets represent an entire <i>sequence</i>. This is very
+powerful. Above, it means the inner sequence and the rest to the
+right have the same value (there is an implicit set of brackets
+around the entire string). This is how we can create, in this case,
+a half rest or whole rest, or in other more interesting cases,
+create note subdivisions left up to the imagination (eighths,
+sixteenths, triplets, quintuplets, and all manner of subdivisions of
+subdivisions).
+</li>
+<li>~"slow 2"~ just plays back the pattern half as fast (2 cycles to the
+pattern).
+</li>
+</ul>
+
+<p>
+So our note sequences, or <i>patterns</i> as they are known to Tidal, have
+a <b>very rich</b> recursive structure, that not only defines the contents
+(notes and instruments) but the very rhythms themselves!
+</p>
+
+<p>
+To summarize in a very hand-wavy way:
+</p>
+
+<pre class="example">
+&lt;Sample-ref&gt; = &lt;Sample-name&gt;":"&lt;Sample-index&gt;
+&lt;Note&gt; = &lt;~&gt; | &lt;Sample-ref&gt;
+&lt;Notes*&gt; = &lt; &gt; | &lt;Note&gt; | &lt;Note&gt;&lt;Note&gt; | &lt;Note&gt;&lt;Note&gt;&lt;Note&gt; | ...
+&lt;Pattern&gt; = &lt;Notes*&gt; | &lt;Notes*&gt;&lt;Pattern&gt;&lt;Notes*&gt;
+</pre>
+
+<p>
+Do understand this is no coincidence. Haskell has very powerful
+pattern matching capability built into the language for extending the
+language with one's own datatypes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> The TidalCycles architecture</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Recording/producing/composing applications in Linux, as well as with
+music programming, tend to follow a simple and familiar paradigm.
+</p>
+
+<ul class="org-ul">
+<li>A client, typically interfaced by a text editor or command line
+interface, hooked up via a port to&#x2026;
+</li>
+<li>The server, who listens on said port for messages to be evaluated.
+</li>
+</ul>
+
+<p>
+What's nice: ports are general. Use these applications on one machine,
+with different users, over a network, etc.
+</p>
+
+<p>
+TidalCycles does this in the following interesting way.
+</p>
+<ul class="org-ul">
+<li>The client is essentially a Haskell interactive "REPL" (GHCi, for
+the most part) running TidalCycles, the domain specific language.
+</li>
+<li>The server is a sampler called SuperDirt, written in and running on
+a (much broader in scope and significantly more complex) music
+programming environment called SuperCollider. SC talks to your
+computer's soundcard.
+</li>
+</ul>
+
+<p>
+You can interface with TidalCycles with your favorite text editor
+(Emacs, VSCode, Atom, Vim, Sublime). With these editors, starting GHCi
+and hooking up to SuperDirt is taken care of behind the scenes. The
+only aspect of the editor's Tidal add-on you really need to know is
+one keyboard shortcut: execute line/block.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Baby Steps</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Now let's make some sound.  Since Haskell is functional, and there are
+no objects, sound is generated by passing parameters to functions to
+functions. The general syntax is:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">d1 (pattern-effect (... (sound "some-pattern" # synth-effects) ) ... )
+</pre>
+</div>
+
+<p>
+Every function's arguments are listed on the right. Parentheses are
+used to specify order of operations and clarify what is an argument
+and what is a function. Haskell has a shorthand for this. Everything
+to the right of a dollar sign is inside of imaginary parentheses:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">d1 $ pattern-effect $ ... $ sound "some-pattern" # synth-effects
+</pre>
+</div>
+
+<p>
+The <code>d*</code> functions where <code>*</code> is a number 1 through 9 are outputs. The
+"sound" function (shorthand: ~"s"~) takes as its argument a pattern in
+string format and returns a "ParamPattern" which can be passed into
+"pattern effect" functions. These are things like changing playback
+speed, reversing, and permuting patterns. Synth effects are things
+like filters and sample playback position.
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> <span class="todo TODO">TODO</span> Examples here.</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Of course, the true power of something like TidalCycles is the ability
+to use programming constructs one doesn't have access to when
+composing or performing traditionally. Remember how I have a thing for
+RNG? There's a really nice function in Tidal called <code>irand</code>.
+</p>
+
+<p>
+I happen to have some drum breaks that I processed and sliced up using
+Ableton Live.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">d1 $ s "rad1*8" # n $ run 8
+</pre>
+</div>
+
+<p>
+(The second option parameterizes the sample index and is better if you
+plan to add more synth effects; they just append to the end of the
+line.)  Bam, instant breakcore. Not bad, but we can do even
+better. How can we make this even more IDM-ish and glitchy? Lots of
+effects. Some of my favorites:
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> <span class="todo TODO">TODO</span> More examples here.</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Now I'm just going to start doing stuff. While Tidal makes available
+many samples via the Dirt-Samples quark, I have my own library I've
+been building that I'll stick to. These will be included on GitHub,
+along with the source code for whatever I'm about to do.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> <span class="todo TODO">TODO</span> Live demo goes here.</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Outro: where to go from here</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+At this point, you're either totally hooked and can't wait to get
+started yourself, or you're thoroughly disinterested and ready to get
+back to your projects.  In the latter case, I hope you still gained
+something, even if it was just knowledge of something new.
+</p>
+
+<p>
+In the former case, to learn more, check out
+<a href="https://tidalcycles.org">https://tidalcycles.org</a>. The first tutorial will have you set up the
+environment and start learning the basics of creating patterns. The
+full documentation is, as appropriate for a functional language, a
+list of functions and what they do, with some good examples. But to
+really get the best learning experience, watch Tidal performances and
+try doing the things you see.
+</p>
+
+<p>
+<a href="https://toplap.org">TOPLAP</a> is a very abstract and decentralized organization that promotes
+live coding as a performance art. One of their guiding principles
+argues that the audience should be included in the process, via the
+mantra "show us your screens". This is really cool, since it means the
+audience gets to see the "sheet music" as it's being written - they
+might not understand every detail of the language, but they still
+understand at a high level what the code does, because everyone can
+<i>hear</i> what it does. So, watch some YouTube videos of performance
+events, or <i>algoraves</i> as they are sometimes called, and read the
+code. Try stuff on your own machine, and experiment with the ideas you
+see in the performances.
+</p>
+</div>
+
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Question time</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Once again, thanks to Shriyash for the invitation to talk, the
+GrizzHacks team for having me, and you for your attention. Happy
+hacking!
+</p>
+
+<p>
+Jason Medcoff
+</p>
+
+<p>
+<a href="https://github.com/jorts1114">https://github.com/jorts1114</a>
+<i>
+https://soundcloud.com/jortswubs</i>
+<i>
+https://jortswubs.bandcamp.com</i>n
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 22 September 2018</p>
+<p class="author">Author: Jason Medcoff</p>
+<p class="date">Created: 2018-08-25 Sat 17:22</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.2 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
