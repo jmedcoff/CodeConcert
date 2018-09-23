@@ -1,9 +1,68 @@
-cps (120/60/4)
+cps (175/60/4)
+
+
+d1 $ spread ($) [
+              rev, (|+| accelerate "-1 1"),
+              (|+| coarse "4 16 8"),
+              chop 16, stut 4 0.25 0.25,
+              jux (iter 4)
+              ] $
+            slowcat $
+              [
+               s "rad1*8" # n (irand 8),
+               s "rad2*8" # n (irand 8),
+               s "rad3*8" # n (irand 8),
+               s "rad4*8" # n (irand 8),
+               s "rad5*8" # n (irand 8),
+               s "rad6*8" # n (irand 8),
+               s "rad7*8" # n (irand 8),
+               s "rad8*8" # n (irand 8)
+             ]
+
+d1 $ silence
+
+d3 $ silence
+
+d3 $ stack [
+            s "industrial*8" # cut 2 # n (irand 8) # gain 0.8 # pan 0.8,
+            s "glitch*8" # n (irand 8) # gain 0.8 # pan 0.2,
+            s "casio*8" # n (run 8) # gain 0.6
+]
+
+d2 $ stack [
+            slow 8 $ s "jpad jpad:1 jpad:2 jpad:3" # cutoff 100,
+            slow 4 $ s "jreese jreese:1" # cut 1 # cutoff 100,
+            stut 4 0.25 0.25 $ s "jpluck*8" # n (run 8) #cutoff 200
+]
+
+cps (128/60/4)
+
+d1 $ s "jdrum*4"
+
+kick = "jdrum*4"
+
+d1 $ s kick
 
 hush
 
-d1 $ stack [
-                    up "[16 16 ~ 16 ~ 12 16 ~ 19 ~ ~ ~ 7 ~ ~ ~]" # s "arpy" # gain 1.1,
-                    up "[6 6 ~ 6 ~ 6 6 ~ 11 ~ ~ ~ -5 ~ ~ ~]" # s "arpy" # gain 0.9,
-                    up "[-10 -10 ~ -10 ~ -10 -10 ~ -5 ~ ~ ~ -17 ~ ~ ~]" # s "arpy" # gain 0.9
-]
+d3 $ s "[~ jdrum:1]*2"
+
+d4 $ s "jbass [ ~ [ jbass:1 jbass]] [~ jbass:2 ~ jbass] [~ jbass:1]" # cutoff 100
+
+hush
+
+d2 $ slow 2 $ s "jkey ~ ~ [~ [~ jkey]] [~ jkey] ~ ~ jkey:1*2"
+
+d5 $ s "jdeep" # cutoff 3000
+
+d6 $ fast 2 $ s "[jdrum:2 jdrum:3]*2"
+
+d7 $ fast 16 $ s "jperc" # n (irand 6)
+
+d3 $ silence
+
+d2 $ silence
+
+d7 $ silence
+
+d6 $ silence
