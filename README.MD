@@ -1,7 +1,7 @@
 # Code Concert: Composing live music with TidalCycles
 
 The talk notes ([in html here](index.html)) can be found
-[here](http://bit.ly/codeconcert). Slides are [here](slides/slides.pdf).
+[here](https://jmedcoff.github.io/CodeConcert/). Slides are [here](slides/slides.pdf).
 
 Some extra info not covered in the talk, mostly extra detail:
 
